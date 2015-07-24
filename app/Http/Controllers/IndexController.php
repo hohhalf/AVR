@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\DataTable;
@@ -13,10 +13,12 @@ class IndexController extends Controller
 {
 	public function main(){
 		$downsList = DB::table('OprValueTable')
-			->join('DataTable', 'OprValueTable.DataIndex', '=', 'DataTable.DataIndex', 'OprValueTable.RegionIndex', '=', 'DataTable.RegionIndex')
+			#->join('OprValueTable', 'DataTable.DataIndex', '=', 'OprValueTable.DataIndex')
+			#->join('DataTable', 'OprValueTable.RegionIndex', '=', 'DataTable.RegionIndex')
 			->select('OprValueTable.LogTime','DataTable.DispName','OprValueTable.Value')
-			->
-		return view('main', compact($downsList));
+			->get();
+		#return view('main', compact($downsList));
+		return $downsList;	
 	}
 
 
