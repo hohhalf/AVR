@@ -10,4 +10,6 @@ class OprValueTable extends Model
     protected $table = 'OprValueTable';
     protected $connection = 'systelArchive';
 
+    
+
 }

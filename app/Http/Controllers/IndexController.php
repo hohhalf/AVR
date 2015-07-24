@@ -12,13 +12,16 @@ use App\OprValueTable;
 class IndexController extends Controller
 {
 	public function main(){
+
 		$downsList = DB::table('OprValueTable')
-			#->join('OprValueTable', 'DataTable.DataIndex', '=', 'OprValueTable.DataIndex')
-			#->join('DataTable', 'OprValueTable.RegionIndex', '=', 'DataTable.RegionIndex')
-			->select('OprValueTable.LogTime','DataTable.DispName','OprValueTable.Value')
+			->join('DataTable', function($join){
+                    $join->on('OprValueTable.DataIndex', '=', 'DataTable.DataIndex')->orOn('OprValueTable.RegionIndex', '=', 'DataTable.RegionIndex'); 
+            })
+			->select('OprValueTable.LogTime', 'DataTable.DispName', 'OprValueTable.Value')
+            ->take(100)
+            ->orderBy('OprValueTable.Value')
 			->get();
-		#return view('main', compact($downsList));
-		return $downsList;	
+		return view('records/main',compact('downsList'));
 	}
 
 
@@ -29,7 +32,7 @@ class IndexController extends Controller
 
     public function dispname()
     {
-    	$dispname = OprValueTable::all();
+    	$dispname = DataTable::all();
 
         return $dispname;
     }

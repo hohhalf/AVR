@@ -86,16 +86,6 @@ return [
         ],
 
 
-        'systelArchive' => [
-            'driver'   => 'sqlsrv',
-            'host'     => env('DB_HOST_SA', 'localhost'),
-            'database' => env('DB_DATABASE_SA', 'forge'),
-            'username' => env('DB_USERNAME_SA', 'forge'),
-            'password' => env('DB_PASSWORD_SA', ''),
-            'charset'  => 'utf8',
-            'prefix'   => '',
-        ],
-
     ],
 
     /*
