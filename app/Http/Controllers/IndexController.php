@@ -15,13 +15,21 @@ class IndexController extends Controller
 
 		$downsList = DB::table('OprValueTable')
 			->join('DataTable', function($join){
-                    $join->on('OprValueTable.DataIndex', '=', 'DataTable.DataIndex')->orOn('OprValueTable.RegionIndex', '=', 'DataTable.RegionIndex'); 
+                    $join->on('OprValueTable.DataIndex', '=', 'DataTable.DataIndex');
             })
-			->select('OprValueTable.LogTime', 'DataTable.DispName', 'OprValueTable.Value')
-            ->take(100)
-            ->orderBy('OprValueTable.Value')
+			->select('OprValueTable.Time', 'DataTable.DispName', 'OprValueTable.Value')
+#            ->orderBy('OprValueTable.Time')
 			->get();
-		return view('records/main',compact('downsList'));
+
+
+            $downsCount = DB::table('OprValueTable')
+            ->join('DataTable', function($join){
+                    $join->on('OprValueTable.DataIndex', '=', 'DataTable.DataIndex');
+            })
+            ->select('OprValueTable.Time', 'DataTable.DispName', 'OprValueTable.Value')
+#            ->orderBy('OprValueTable.Time')
+            ->count();
+		return view('records/main',compact('downsList', 'downsCount'));
 	}
 
 
@@ -29,11 +37,22 @@ class IndexController extends Controller
     {
     	return phpinfo();
     }
-
+		
     public function dispname()
     {
-    	$dispname = DataTable::all();
+    	$dispname = DataTable::where('DataTypeIndex', '=', '1')->get();
 
-        return $dispname;
+      return view ('records.objects', compact('dispname'));
+				//return $dispname;
     }
+
+	public function history($DataIndex)
+		{
+		 return $DataIndex;
+		}
+
+
+    public function edit(){
+        return view('records/edit');
+    }    
 }

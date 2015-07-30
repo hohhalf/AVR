@@ -14,3 +14,6 @@
 Route::get('/','IndexController@main');
 Route::get('/test', 'IndexController@test');
 Route::get('/dispname', 'IndexController@dispname');
+Route::get('/show/{DataIndex}', 'IndexController@history');
+Route::get('/edit', 'IndexController@edit');
+
